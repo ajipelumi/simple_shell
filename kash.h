@@ -9,12 +9,14 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
+/* kash functions */
 void prompt(void);
-char *kash_getline(void);
-char **kash_splitline(char *line);
+char *kash_read(void);
+char **kash_split(char *line);
 void kash_exec(char **av);
 
-
+/* malloc functions */
+char **_realloc(char **ntr, int size);
 
 
 

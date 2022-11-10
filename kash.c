@@ -15,8 +15,8 @@ int main(void)
 	while (1)
 	{
 		prompt(); /* display prompt */
-		line = kash_getline(); /* read input */
-		tokens = kash_splitline(line); /* split input into array of strings */
+		line = kash_read(); /* read input */
+		tokens = kash_split(line); /* split input into array of strings */
 
 		if (tokens[0] != NULL)
 		{
