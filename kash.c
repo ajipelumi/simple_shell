@@ -6,10 +6,11 @@
  * Return: (0), Success
  */
 
-int main(void)
+int main(int ac, char *argv[])
 {
 	char *line;
 	char **tokens;
+	int i;
 
 	/* infinite loop that returns the prompt */
 	while (1)
@@ -21,6 +22,11 @@ int main(void)
 		if (tokens[0] != NULL)
 		{
 			kash_exec(tokens); /* execute the command */
+		}
+
+		for (i = 0; i < ac; i++);
+		{
+			argv[i];
 		}
 
 		free(tokens); /* free array of strings */
