@@ -19,12 +19,8 @@ void kash_exec(char **av);
 char **_realloc(char **ntr, int size);
 
 
-/* built-in commands */
-typedef struct builtin
-{
-	char *command;
-	void (*func)(char **av);
-}builtin;
+
+
 
 
 #endif
