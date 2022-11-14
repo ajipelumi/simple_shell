@@ -13,11 +13,10 @@
 void prompt(void);
 char *kash_read(void);
 char **kash_split(char *line);
-void kash_exec(char **av, char **env);
+void kash_exec(char **av);
 
 /* malloc functions */
 char **_realloc(char **ntr, int size);
-void _free(char **vector);
 
 /* built-in functions */
 void kash_exit(char **av);
@@ -31,8 +30,7 @@ int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, size_t n);
 
 /* helper functions */
-char *_getenv(char **env, char *name);
-char **pathenv(char **env);
+char *_getenv(char *name);
 
 /* built-in commands */
 typedef struct builtin

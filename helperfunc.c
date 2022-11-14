@@ -8,42 +8,19 @@
  * Return: environment value
  */
 
-char *_getenv(char **env, char *name)
+char *_getenv(char *name)
 {
+	extern char ** environ;
 	int i = 0, len;
 
 	len = _strlen(name);
-	while (env[i])
+	while (environ[i])
 	{
-		if (_strncmp(name, env[i], len) == 0)
+		if (_strncmp(name, environ[i], len) == 0)
 		{
-			return (env[i]);
+			return (environ[i]);
 		}
 		i++;
 	}
 	return NULL;
-}
-
-char **pathenv(char **env)
-{
-	char *str, *qtr, *delim = "=,:";
-	char **ptr = NULL;
-	unsigned int i = 0;
-
-	str = _getenv(env, "PATH");
-	qtr = strtok(str, delim);
-	ptr = malloc(sizeof(char *) * (_strlen(str) * 8));
-	if (!ptr)
-	{
-		return (NULL);
-	}
-	qtr = strtok(NULL, delim);
-	while (qtr != NULL)
-	{
-		ptr[i] = strdup(qtr);
-		i++;
-		qtr = strtok(NULL, delim);
-	}
-	ptr[i] = '\0';
-	return (ptr);
 }
