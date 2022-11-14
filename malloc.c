@@ -32,3 +32,23 @@ char **_realloc(char **ntr, int size)
 	free(ntr); /* free old array */
 	return (new_ptr); /* return new array */
 }
+
+/*
+ * _free - frees array of strings
+ *
+ * @vector: array of strings
+ *
+ * Return: void
+ */
+
+void _free(char **vector)
+{
+        unsigned int i = 0;
+        while (vector[i])
+        {
+                free(vector[i]);
+                i++;
+        }
+        free(vector);
+        vector = NULL;
+}

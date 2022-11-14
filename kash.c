@@ -6,7 +6,7 @@
  * Return: (0), Success
  */
 
-int main(void)
+int main(__attribute__((unused)) int ac, __attribute__((unused)) char *av[], char *env[])
 {
 	char *line;
 	char **tokens;
@@ -20,7 +20,7 @@ int main(void)
 
 		if (tokens[0] != NULL)
 		{
-			kash_exec(tokens); /* execute the command */
+			kash_exec(tokens, env); /* execute the command */
 		}
 
 		free(tokens); /* free array of strings */

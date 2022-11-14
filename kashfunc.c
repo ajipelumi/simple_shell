@@ -83,31 +83,32 @@ char **kash_split(char *line)
  * Return: void
  */
 
-void kash_exec(char **av)
+void kash_exec(char **av, char **env)
 {
 	pid_t f;
 	int exe, status;
 
 	if (kash_builtin(av) == 1)
 	{
-	/* create child process */
-	f = fork();
-	if (f == 0) /* if child process is created */
-	{
-		/* execute command */
-		exe = execve(av[0], av, NULL);
-		if (exe == -1) /* if execve fails */
+
+		/* create child process */
+		f = fork();
+		if (f == 0) /* if child process is created */
+		{
+			/* execute command */
+			exe = execve(av[0], av, env);
+			if (exe == -1) /* if execve fails */
+			{
+				perror("Error");
+			}
+		}
+		else if (f > 0) /* parent child receives process ID of child */
+		{
+			wait(&status); /* waits for child to return */
+		}
+		else /* child process was not created */
 		{
 			perror("Error");
 		}
-	}
-	else if (f > 0) /* parent child receives process ID of child */
-	{
-		wait(&status); /* waits for child to return */
-	}
-	else /* child process was not created */
-	{
-		perror("Error");
-	}
 	}
 }
