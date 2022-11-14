@@ -88,6 +88,8 @@ void kash_exec(char **av)
 	pid_t f;
 	int exe, status;
 
+	if (kash_builtin(av) == 1)
+	{
 	/* create child process */
 	f = fork();
 	if (f == 0) /* if child process is created */
@@ -106,5 +108,6 @@ void kash_exec(char **av)
 	else /* child process was not created */
 	{
 		perror("Error");
+	}
 	}
 }
