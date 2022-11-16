@@ -14,8 +14,6 @@ int main(int ac, char **av, char **env)
 {
 	char *line;
 	char **tokens;
-	int i;	/* to loop through the arguments */
-	int ret;
 
 	(void)ac; /* ignore ac */
 	(void)av; /* ignore av */
@@ -32,6 +30,7 @@ int main(int ac, char **av, char **env)
 		{
 			kash_exec(env, tokens); /* execute the command */
 		}
+
 		free(tokens); /* free array of strings */
 		free(line); /* free input string */
 	}
