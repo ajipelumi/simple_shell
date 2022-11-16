@@ -110,6 +110,8 @@ void kash_exec(char **argv, char **env, char **av)
 		{
 			perror(argv[0]);
 		}
+		else
+		{
 		/* create child process */
 		child = fork();
 		if (child < 0) /* child process was not created */
@@ -124,6 +126,7 @@ void kash_exec(char **argv, char **env, char **av)
 			{
 				perror(argv[0]);
 			}
+		}
 		}
 		wait(&status); /* waits for child to return */
 	}
