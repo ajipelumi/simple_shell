@@ -89,15 +89,18 @@ char *kash_path(char **env, char *command)
 		str[i] = _strcat(str[i], command); /* append command */
 		if (command[0] == '/') /* if command is a directory */
 		{
+			return (command);
 			break; /* exit the loop */
 		}
 		if (_strcmp(command, "./") == 0) /* if command is a directory */
 		{
+			return (command);
 			break; /* exit the loop */
 		}
 		if (stat(str[i], &sb) == 0) /* locate the command in PATH */
 		{
 			return (str[i]); /* return appended command */
+			break;
 		}
 		else
 		{
@@ -107,5 +110,5 @@ char *kash_path(char **env, char *command)
 	}
 	free(str[i]);
 	free(path);
-	return (command); /* return command */
+	return (NULL); /* return command */
 }

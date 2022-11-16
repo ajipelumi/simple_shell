@@ -106,6 +106,10 @@ void kash_exec(char **argv, char **env, char **av)
 	{
 		/* handles path */
 		av[0] = kash_path(env, av[0]);
+		if (av[0] == NULL) /* if command does not exist */
+		{
+			perror(argv[0]);
+		}
 		/* create child process */
 		child = fork();
 		if (child < 0) /* child process was not created */
