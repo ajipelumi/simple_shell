@@ -37,12 +37,19 @@ char *_getenv(char **environ, char *name);
 void sig_handler(int num);
 char *kash_path(char **env, char *command);
 
-/* built-in commands */
+/**
+ * struct builtin - for builtin commands
+ *
+ * @command: the command
+ * @func: the function associated
+ *
+ */
+
 typedef struct builtin
 {
 	char *command;
 	void (*func)(char **env, char **av);
-}builtin;
+} builtin;
 
 
 #endif
