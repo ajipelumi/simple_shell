@@ -44,6 +44,7 @@ char **_realloc(char **ntr, int size)
 void _free(char **vector)
 {
 	unsigned int i = 0;
+
 	while (vector[i])
 	{
 		free(vector[i]);
