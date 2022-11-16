@@ -13,7 +13,7 @@
 void prompt(void);
 char *kash_read(void);
 char **kash_split(char *line);
-void kash_exec(char **env, char **av);
+void kash_exec(char **argv, char **env, char **av);
 
 /* malloc functions */
 char **_realloc(char **ntr, int size);

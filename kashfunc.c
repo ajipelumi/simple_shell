@@ -88,13 +88,14 @@ char **kash_split(char *line)
 /**
  * kash_exec - executes the command
  *
+ * @argv: kash shell
  * @env: environment variables
  * @av: argument vector
  *
  * Return: void
  */
 
-void kash_exec(char **env, char **av)
+void kash_exec(char **argv, char **env, char **av)
 {
 	pid_t child;
 	int built, exe, status;
@@ -109,7 +110,7 @@ void kash_exec(char **env, char **av)
 		child = fork();
 		if (child < 0) /* child process was not created */
 		{
-			perror("Error");
+			perror(argv[0]);
 		}
 		if (child == 0) /* if child process is created */
 		{
@@ -117,7 +118,7 @@ void kash_exec(char **env, char **av)
 			exe = execve(av[0], av, NULL);
 			if (exe == -1) /* if execve fails */
 			{
-				perror("Error");
+				perror(argv[0]);
 			}
 		}
 		wait(&status); /* waits for child to return */
