@@ -8,12 +8,12 @@
 
 void prompt(void)
 {
-	char *s = "($) ";
+	char *s = "#cisfun$ ";
 
 	if (isatty(STDIN_FILENO) == 1)
 	{
 		/* write to standard output */
-		write(STDOUT_FILENO, s, 4);
+		write(STDOUT_FILENO, s, _strlen(s));
 	}
 }
 
@@ -121,7 +121,7 @@ void kash_exec(char **argv, char **env, char **av)
 		if (child == 0) /* if child process is created */
 		{
 			/* execute command */
-			exe = execve(av[0], av, NULL);
+			exe = execve(av[0], av, env);
 			if (exe == -1) /* if execve fails */
 			{
 				perror(argv[0]);
