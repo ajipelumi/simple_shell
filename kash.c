@@ -11,6 +11,7 @@ int main(void)
 	char *line;
 	char **tokens;
 
+	signal(SIGINT, sig_handler); /* handle signal */
 	/* infinite loop that returns the prompt */
 	while (1)
 	{

@@ -17,6 +17,7 @@ void kash_exec(char **av);
 
 /* malloc functions */
 char **_realloc(char **ntr, int size);
+void _free(char **vector);
 
 /* built-in functions */
 void kash_exit(char **av);
@@ -28,9 +29,13 @@ int kash_builtin(char **av);
 int _strlen(char *str);
 int _strcmp(char *s1, char *s2);
 int _strncmp(char *s1, char *s2, size_t n);
+char *_strdup(char *s);
+char *_strcat(char *dest, char *src);
 
 /* helper functions */
 char *_getenv(char *name);
+void sig_handler(int num);
+char *kash_path(char *command);
 
 /* built-in commands */
 typedef struct builtin

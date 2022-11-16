@@ -77,14 +77,17 @@ int _strncmp(char *s1, char *s2, size_t n)
 
 	while (flag == 0)
 	{
+		/* if first string is greater */
 		if (s1[i] > s2[i])
 		{
-			flag = 1;
+			flag = 1; /* return 1 */
 		}
+		 /* else if first string is less */
 		else if (s1[i] < s2[i])
 		{
-			flag = -1;
+			flag = -1; /* return -1 */
 		}
+		 /* iterate through the first n bytes */
 		if (i == (n - 1))
 		{
 			break;
@@ -92,4 +95,78 @@ int _strncmp(char *s1, char *s2, size_t n)
 		i++;
 	}
 	return flag;
+}
+
+/**
+ * _strdup - duplicates a string
+ *
+ * @s: string to be duplicated
+ *
+ * Return: pointer to the duplicated string
+ */
+
+char *_strdup(char *s)
+{
+	char *ptr = NULL;
+	int i, len;
+
+	len = _strlen(s); /* find length of string */
+	/* allocate memory for string to be duplicated */
+	ptr = malloc(sizeof(char) * len + 1);
+	if (!ptr) /* if malloc fails */
+	{
+		free(ptr);
+		return (NULL);
+	}
+	/* loop to duplicate each character in the string */
+	for (i = 0; s[i] != '\0'; i++)
+	{
+		ptr[i] = s[i];
+	}
+	ptr[i] = '\0'; /* null terminate the string */
+	return (ptr); /* return duplicated string */
+}
+
+/**
+ * _strcat - concatenates two strings
+ *
+ * @dest: second string
+ * @src: first string
+ *
+ * Return: pointer to concatenated string
+ */
+
+char *_strcat(char *dest, char *src)
+{
+	char *str;
+	int i, j;
+	int len1, len2;
+
+	if (dest == NULL)
+		len1 = 0;
+	else
+		len1 = _strlen(dest);
+	if (src == NULL)
+		len2 = 0;
+	else
+		len2 = _strlen(src);
+
+	str = malloc(sizeof(char) * (len1 + len2 + 2));
+	if (str == NULL)
+	{
+		return (NULL);
+	}
+	for (i = 0; i < len1; i++)
+	{
+		str[i] = dest[i];
+	}
+	str[i] = '/';
+	i++;
+	for (j = 0; j < len2; j++, i++)
+	{
+		str[i] = src[j];
+	}
+	str[i] = '\0';
+	free(dest);
+	return (str);
 }

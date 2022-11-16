@@ -10,8 +10,11 @@ void prompt(void)
 {
 	char *s = "($) ";
 
-	/* write to standard output */
-	write(STDOUT_FILENO, s, 4);
+	if (isatty(STDIN_FILENO) == 1)
+	{
+		/* write to standard output */
+		write(STDOUT_FILENO, s, 4);
+	}
 }
 
 /**
@@ -26,13 +29,20 @@ char *kash_read(void)
 	size_t len = 0;
 	ssize_t read;
 
-	/* reads standard input and stores as a string (line) */
-	read = getline(&line, &len, stdin);
-	if (read == -1) /* if it fails to read standard input */
+	while (1)
 	{
-		perror("Error");
+		/* reads standard input and stores as a string (line) */
+		read = getline(&line, &len, stdin);
+		if (read == -1) /* if it fails to read standard input */
+		{
+			if (isatty(STDIN_FILENO) == 1)
+			{
+				write(STDOUT_FILENO, "\n", 1);
+			}
+			exit(EXIT_SUCCESS);
+		}
+		return (line); /* returns input as string */
 	}
-	return (line); /* returns input as string */
 }
 
 /**
@@ -46,7 +56,7 @@ char *kash_read(void)
 char **kash_split(char *line)
 {
 	char **tokens = NULL;
-	char *tok;
+	char *tok = NULL;
 	char *delim = " \t\r\n"; /* strtok splits string on instance of a delimiter */
 	int len = 0, cap = 16;
 
@@ -85,29 +95,30 @@ char **kash_split(char *line)
 
 void kash_exec(char **av)
 {
-	pid_t f;
-	int exe, status;
+	pid_t child;
+	int built, exe, status;
 
-	if (kash_builtin(av) == 1)
+	/* check if command is builtin and executes */
+	built = kash_builtin(av);
+	if (built == 1) /* not a built-in */
 	{
-	/* create child process */
-	f = fork();
-	if (f == 0) /* if child process is created */
-	{
-		/* execute command */
-		exe = execve(av[0], av, NULL);
-		if (exe == -1) /* if execve fails */
+		/* handles path */
+		av[0] = kash_path(av[0]);
+		/* create child process */
+		child = fork();
+		if (child < 0) /* child process was not created */
 		{
 			perror("Error");
 		}
-	}
-	else if (f > 0) /* parent child receives process ID of child */
-	{
+		if (child == 0) /* if child process is created */
+		{
+			/* execute command */
+			exe = execve(av[0], av, NULL);
+			if (exe == -1) /* if execve fails */
+			{
+				perror("Error");
+			}
+		}
 		wait(&status); /* waits for child to return */
-	}
-	else /* child process was not created */
-	{
-		perror("Error");
-	}
 	}
 }
