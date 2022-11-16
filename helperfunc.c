@@ -62,7 +62,7 @@ void sig_handler(int num)
 	}
 }
 
-/*
+/**
  * kash_path - finds the path of a specific command
  *
  * @env: environment variable
