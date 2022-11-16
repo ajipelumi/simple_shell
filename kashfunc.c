@@ -8,7 +8,7 @@
 
 void prompt(void)
 {
-	char *s = "#cisfun$ ";
+	char *s = "($) ";
 
 	if (isatty(STDIN_FILENO) == 1)
 	{
