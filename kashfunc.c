@@ -88,22 +88,23 @@ char **kash_split(char *line)
 /**
  * kash_exec - executes the command
  *
+ * @env: environment variables
  * @av: argument vector
  *
  * Return: void
  */
 
-void kash_exec(char **av)
+void kash_exec(char **env, char **av)
 {
 	pid_t child;
 	int built, exe, status;
 
 	/* check if command is builtin and executes */
-	built = kash_builtin(av);
+	built = kash_builtin(env, av);
 	if (built == 1) /* not a built-in */
 	{
 		/* handles path */
-		av[0] = kash_path(av[0]);
+		av[0] = kash_path(env, av[0]);
 		/* create child process */
 		child = fork();
 		if (child < 0) /* child process was not created */

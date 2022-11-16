@@ -3,13 +3,20 @@
 /**
  * main - creates a shell
  *
+ * @ac: argument count
+ * @av: argument vector
+ * @env: environment variables
+ *
  * Return: (0), Success
  */
 
-int main(void)
+int main(int ac, char **av, char **env)
 {
 	char *line;
 	char **tokens;
+
+	(void)ac; /* ignore ac */
+	(void)av; /* ignore av */
 
 	signal(SIGINT, sig_handler); /* handle signal */
 	/* infinite loop that returns the prompt */
@@ -21,7 +28,7 @@ int main(void)
 
 		if (tokens[0] != NULL)
 		{
-			kash_exec(tokens); /* execute the command */
+			kash_exec(env, tokens); /* execute the command */
 		}
 
 		free(tokens); /* free array of strings */

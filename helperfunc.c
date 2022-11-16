@@ -3,14 +3,14 @@
 /**
  * _getenv - get environment variable
  *
+ * @environ: environment variable
  * @name: name of the variable
  *
  * Return: environment value
  */
 
-char *_getenv(char *name)
+char *_getenv(char **environ, char *name)
 {
-	extern char **environ;
 	char *env = NULL;
 	unsigned int a = 0, b = 0, c = 0, d = 0;
 
@@ -65,12 +65,13 @@ void sig_handler(int num)
 /*
  * kash_path - finds the path of a specific command
  *
+ * @env: environment variable
  * @command: name of command
  *
  * Return: path name with command
  */
 
-char *kash_path(char *command)
+char *kash_path(char **env, char *command)
 {
 	char *name = "PATH";
 	char *path, *tok, *delim = "=,:";
@@ -78,7 +79,7 @@ char *kash_path(char *command)
 	struct stat sb;
 	int i = 0;
 
-	path = _getenv(name); /* get path value */
+	path = _getenv(env, name); /* get path value */
 	tok = strtok(path, delim); /* split directories into strings */
 	tok = strtok(NULL, delim); /* eliminates "PATH=" */
 	while (tok != NULL) /* loop until end of PATH */
