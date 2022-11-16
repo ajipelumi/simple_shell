@@ -17,7 +17,6 @@ void kash_exec(char **av);
 
 /* malloc functions */
 char **_realloc(char **ntr, int size);
-void _free(char **vector);
 
 /* built-in functions */
 void kash_exit(char **av);

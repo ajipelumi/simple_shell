@@ -55,7 +55,7 @@ int _strcmp(char *s1, char *s2)
 		}
 		i++;
 	}
-	return flag;
+	return (flag);
 }
 
 /**
@@ -94,7 +94,7 @@ int _strncmp(char *s1, char *s2, size_t n)
 		}
 		i++;
 	}
-	return flag;
+	return (flag);
 }
 
 /**

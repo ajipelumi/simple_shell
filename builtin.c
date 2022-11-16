@@ -75,21 +75,22 @@ void kash_env(__attribute__((unused)) char **av)
 
 int kash_builtin(char **av)
 {
-        int i;
-        builtin com[] = {
-                {"exit", kash_exit},
-                {"cd", kash_cd},
-                {"env", kash_env},
+	int i;
+	builtin com[] = {
+		{"exit", kash_exit},
+		{"cd", kash_cd},
+		{"env", kash_env},
 		{NULL, NULL}
-        };
+	};
 
-        /* iterate through our struct */
-        for (i = 0; com[i].command != NULL; i++)
-        {
-                if (_strcmp(av[0], com[i].command) == 0) /* if command exists */                {
-                        com[i].func(av); /* calls associated function */
-                        return (0);
-                }
-        }
-        return (1); /* command is not built-in */
+	/* iterate through our struct */
+	for (i = 0; com[i].command != NULL; i++)
+	{
+		if (_strcmp(av[0], com[i].command) == 0) /* if command exists */
+		{
+			com[i].func(av); /* calls associated function */
+			return (0);
+		}
+	}
+	return (1); /* command is not built-in */
 }
