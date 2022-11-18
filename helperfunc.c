@@ -96,10 +96,11 @@ char *kash_path(char **env, char *command)
 		str = _strcat(tok, command); /* append command */
 		if (stat(str, &sb) == 0) /* locate the command in PATH */
 		{
-			free(path);
+			free(command); /* free memory allocated for command */
+			free(path); /* free memory allocated for path */
 			return (str); /* return appended command */
 		}
-		free(str);
+		free(str); /* free memory allocated to append command */
 		tok = strtok(NULL, delim); /* goes to the next directory */
 	}
 	free(path);
