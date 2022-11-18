@@ -45,11 +45,11 @@ void _free(char **vector)
 {
 	unsigned int i = 0;
 
-	while (vector[i])
+	while (vector[i]) /* loop through array of strings */
 	{
-		free(vector[i]);
+		free(vector[i]); /* free strings */
 		i++;
 	}
-	free(vector);
+	free(vector); /* free array */
 	vector = NULL;
 }

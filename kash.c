@@ -29,9 +29,6 @@ int main(int argc, char **argv, char **env)
 		{
 			kash_exec(argv, env, tokens); /* execute the command */
 		}
-
-		free(tokens); /* free array of strings */
-		free(line); /* free input string */
 	}
 	return (0);
 }

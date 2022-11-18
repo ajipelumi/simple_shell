@@ -12,8 +12,8 @@
 void kash_exit(char **env, char **av)
 {
 	(void)env;
-	(void)av;
 
+	_free(av); /* free tokens before exit */
 	exit(0);
 }
 
@@ -32,16 +32,16 @@ void kash_cd(char **env, char **av)
 
 	(void)env;
 
-	if (_strcmp(av[1], "\0") == 0)
+	if (_strcmp(av[1], "\0") == 0) /* compare strings */
 	{
 		av[1] = "$HOME";
 	}
-	if (_strcmp(av[1], "-") == 0)
+	if (_strcmp(av[1], "-") == 0) /*  compare strings */
 	{
 		av[1] = "$OLDPWD";
 	}
 
-	ret = chdir(av[1]);
+	ret = chdir(av[1]); /* change directory */
 	if (ret == -1)
 	{
 		perror("Error");

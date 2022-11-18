@@ -30,6 +30,10 @@ char *_getenv(char **environ, char *name)
 		{
 			b++; /* goes to the value after '=' */
 			env = malloc(sizeof(char) * _strlen(environ[a]) - b + 1);
+			if (env == NULL)
+			{
+				return (NULL);
+			}
 			while (environ[a][b] != '\0') /* loop through PATH value */
 			{
 				/* store PATH value in allocated memory */
@@ -41,7 +45,6 @@ char *_getenv(char **environ, char *name)
 		else
 			c = b = 0, a++; /* loops through environment until PATH is found */
 	}
-	free(env);
 	return (NULL); /* return NULL if no PATH */
 }
 
@@ -74,38 +77,31 @@ void sig_handler(int num)
 char *kash_path(char **env, char *command)
 {
 	char *name = "PATH";
-	char *path, *tok, *delim = "=,:";
-	char *str[8];
+	char *path, *tok, *delim = ":";
+	char *str;
 	struct stat sb;
-	int i = 0;
 
+	if (command[0] == '/') /* if command is a directory */
+	{
+		return (command);
+	}
+	if (_strcmp(command, "./") == 0) /* if command is a directory */
+	{
+		return (command);
+	}
 	path = _getenv(env, name); /* get path value */
 	tok = strtok(path, delim); /* split directories into strings */
-	tok = strtok(NULL, delim); /* eliminates "PATH=" */
 	while (tok != NULL) /* loop until end of PATH */
 	{
-		str[i] = NULL;
-		str[i] = _strdup(tok); /* copy directory in PATH */
-		str[i] = _strcat(str[i], command); /* append command */
-		if (command[0] == '/') /* if command is a directory */
+		str = _strcat(tok, command); /* append command */
+		if (stat(str, &sb) == 0) /* locate the command in PATH */
 		{
-			return (command);
+			free(path);
+			return (str); /* return appended command */
 		}
-		if (_strcmp(command, "./") == 0) /* if command is a directory */
-		{
-			return (command);
-		}
-		if (stat(str[i], &sb) == 0) /* locate the command in PATH */
-		{
-			return (str[i]); /* return appended command */
-		}
-		else
-		{
-			i++;
-		}
+		free(str);
 		tok = strtok(NULL, delim); /* goes to the next directory */
 	}
-	free(str[i]);
 	free(path);
 	return (NULL); /* return command */
 }

@@ -142,15 +142,16 @@ char *_strcat(char *dest, char *src)
 	int i, j;
 	int len1, len2;
 
-	if (dest == NULL)
+	if (dest == NULL) /* if destination is NULL */
 		len1 = 0;
 	else
-		len1 = _strlen(dest);
-	if (src == NULL)
+		len1 = _strlen(dest); /* length of dest */
+	if (src == NULL) /* if source is NULL */
 		len2 = 0;
 	else
-		len2 = _strlen(src);
+		len2 = _strlen(src); /* length of src */
 
+	/* allocate memory to store dest and src */
 	str = malloc(sizeof(char) * (len1 + len2 + 2));
 	if (str == NULL)
 	{
@@ -158,15 +159,14 @@ char *_strcat(char *dest, char *src)
 	}
 	for (i = 0; i < len1; i++)
 	{
-		str[i] = dest[i];
+		str[i] = dest[i]; /* store dest */
 	}
-	str[i] = '/';
+	str[i] = '/'; /* append forward slash */
 	i++;
 	for (j = 0; j < len2; j++, i++)
 	{
-		str[i] = src[j];
+		str[i] = src[j]; /* append src */
 	}
-	str[i] = '\0';
-	free(dest);
-	return (str);
+	str[i] = '\0'; /* null terminate */
+	return (str); /* pointer to concatenated string */
 }

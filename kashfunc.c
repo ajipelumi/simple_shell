@@ -27,14 +27,15 @@ char *kash_read(void)
 {
 	char *line = NULL;
 	size_t len = 0;
-	ssize_t read;
+	ssize_t rd;
 
 	while (1)
 	{
 		/* reads standard input and stores as a string (line) */
-		read = getline(&line, &len, stdin);
-		if (read == -1) /* if it fails to read standard input */
+		rd = getline(&line, &len, stdin);
+		if (rd == -1) /* if it fails to read standard input */
 		{
+			free(line);
 			if (isatty(STDIN_FILENO) == 1)
 			{
 				write(STDOUT_FILENO, "\n", 1);
@@ -58,7 +59,7 @@ char **kash_split(char *line)
 	char **tokens = NULL;
 	char *tok = NULL;
 	char *delim = " \t\r\n"; /* strtok splits string on instance of a delimiter */
-	int len = 0, cap = 16;
+	int len = 0, cap = 8;
 
 	tokens = malloc(sizeof(char *) * cap);
 	if (!tokens)
@@ -70,7 +71,7 @@ char **kash_split(char *line)
 	/* run loop to check that token is not null */
 	while (tok != NULL)
 	{
-		tokens[len] = tok; /* stores token in allocated memory */
+		tokens[len] = _strdup(tok); /* stores token in allocated memory */
 		len++;
 		/* if allocated memory is not enough to store tokens */
 		if (len >= cap)
@@ -82,6 +83,7 @@ char **kash_split(char *line)
 		tok = strtok(NULL, delim); /* fetches the next string until delimiter */
 	}
 	tokens[len] = NULL; /* null terminates array of strings */
+	free(line);
 	return (tokens); /* returns the array of strings */
 }
 
@@ -127,7 +129,11 @@ void kash_exec(char **argv, char **env, char **av)
 				perror(argv[0]);
 			}
 		}
+		else
+		{
+			wait(&status); /* waits for child to return */
+			_free(av);
 		}
-		wait(&status); /* waits for child to return */
+		}
 	}
 }
