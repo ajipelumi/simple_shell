@@ -37,6 +37,10 @@ char *_getenv(char **environ, char *name);
 void sig_handler(int num);
 char *kash_path(char **env, char *command);
 
+/* getline functions */
+void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+
 /**
  * struct builtin - for builtin commands
  *
