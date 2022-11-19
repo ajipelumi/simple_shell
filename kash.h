@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <stddef.h>
 
 /* kash functions */
 void prompt(void);

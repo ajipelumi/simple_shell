@@ -51,7 +51,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		return (-1);
 	input = 0;
 
-	buffer = malloc(sizeof(char) * 120);
+	buffer = malloc(sizeof(char) * 120); /* assign memory to buffer */
 
 	if (!buffer)
 		return (-1);
